@@ -1,0 +1,126 @@
+prefix: "&7[&b传送系统&7] "
+player_only: "&c只有玩家可以使用此命令!"
+usage_warp: "&c正确的用法: /warp [传送点名称]"
+usage_dewarp: "&c正确用法: /dewarp [传送点名称]"
+usage_setwarp: "&c正确用法: /setwarp [传送点名称]"
+usage_warplist: "&a使用/warplist 来查看您的所有传送点"
+invalid_length: "&c你输入的传送点名称过长或过短!"
+invalid_char: "&c你输入的传送点名称包含违规字符!"
+teleporting: "&c当前正在传送等待中,请稍后再试"
+teleported: "&a已传送"
+loadinggui: "&c传送点菜单正在载入中...请稍后再试"
+player_moved: "&c你移动了!传送点取消.."
+warplist: "&a你的传送点: "
+#[0] 传送延迟
+teleport_in: "将在 [0] 秒后进行传送,请不要移动"
+#[0] 传送点名称
+has_warp: "&c已经有一个名叫 [0] 的传送点了!"
+has_warp_nearby: "&c附近已经有一个名叫 [0] 的传送点了!"
+no_warp: "&c没有名叫 [0] 的传送点"
+create_warp: "&a已成功创建传送点: [0]"
+# [0] 需要花费的游戏币
+ins_balance: "&c你的游戏币没有 [0] !"
+balance_take: "&a从你的账户中扣除了 [0] 游戏币"
+#[0] 传送点数量限制
+warp_limit: "&c您的传送点数量已经达到限制: [0]"
+not_owner: "&c此传送点的主人不是你!"
+delete_warp: "&a成功删除此传送点!"
+no_permission: "&c你没有权限!"
+reload: "&a配置文件已重新载入!"
+empty_warp: "&c目前还没有任何传送点!"
+not_num: "&c请输入数字！"
+last_page: "&c已经是最后一页了!"
+warp_list: "&a所有传送点列表"
+gui_notenable: "&c传送点界面尚未启用"
+#[0] 传送点页数
+warp_list_next: "&a使用/mywarp listall [0] 来查看下一页"
+#[0] 玩家名 [1] 页数
+player_warp_list_next: "&a使用/mywarp list [0] [1] 来查看下一页"
+player_nowarp: "&c该名玩家并没有任何传送点!"
+#[0] 玩家
+player_warp_list: "&a玩家 [0] 的传送点"
+#[0] 插件名称 [1] 传送点数量
+import: "&a成功从 [0] 中导入了 [1] 个传送点"
+import_error: "&c未找到任何兼容的传送点插件可供导入!"
+purge_warp: "&a清理了 [0] 个距离过近的传送点!"
+waiting_task: "&a已开始异步执行操作,更多信息请查看控制台...."
+warp_imported: "&a新的传送点已经导入: &2[0]"
+warp_purged: "&a传送点已被清理: &c[0] &a过于接近 &2[1]"
+warps_loaded: "&a载入了 [0] 个传送点,花费: [1] ms"
+mywarp_help:
+  - "&b&l传送系统帮助"
+  - "&a/mywarp info <传送点> —— &e查看传送点信息"
+  - "&a/mywarp list <玩家> [页数] —— &e列出单个玩家的传送点"
+  - "&a/mywarp listall [页数] —— &e列出所有传送点"
+  - "&a/mywarp reload —— &e重新载入配置文件"
+  - "&a/mywarp gui —— &e打开传送点界面"
+  - "&a/mywarp purge —— &e清除所有距离过近传送点"
+  - "&a/mywarp import —— &e从ess导入传送点"
+
+warp_info:
+  - "&6&m======== &b&l传送点: &e %name% &6&m========="
+  - "  &bX: &e%X%"
+  - "  &bY: &e%Y%"
+  - "  &bZ: &e%Z%"
+  - "  &b世界: &e%world%"
+  - "  &b主人: &e%owner%"
+  - "  &b参观数量: &e%visits%"
+  - "  &b创建时间: &e%create_date%"
+  - "  &b上次活跃: &e%last_visit_date%"
+  - "&6&m==========================="
+#GUI部分
+inventory:
+  #[0] 当前页数 [1] 总页数
+  title: "&9&l传送点列表 [0]/[1]"
+  #头颅皮肤加载失败的默认皮肤[随机]
+  #https://minecraft-heads.com/custom-heads
+  randomheads:
+    - "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzk1ZDM3OTkzZTU5NDA4MjY3ODQ3MmJmOWQ4NjgyMzQxM2MyNTBkNDMzMmEyYzdkOGM1MmRlNDk3NmIzNjIifX19"
+    - "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODQ0OWI5MzE4ZTMzMTU4ZTY0YTQ2YWIwZGUxMjFjM2Q0MDAwMGUzMzMyYzE1NzQ5MzJiM2M4NDlkOGZhMGRjMiJ9fX0="
+    - "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWY1ZjE1OTg4NmNjNTMxZmZlYTBkOGFhNWY5MmVkNGU1ZGE2NWY3MjRjMDU3MGFmODZhOTBiZjAwYzY3YzQyZSJ9fX0="
+    - "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDdmYzMwYTk2YTAyYTdmOWFlNmRmYTVjMmIxNzAyNmY1Mjc5NmZiMmMwMmI1ZGJiMGM2ZWQ1YzhmODhjOTU5NiJ9fX0="
+    - "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTFjNGE3MThhOTEzZjk1ZWRhZDEwNjgwMGEzNDE0ZmI4Mjc3Njk5MzA4YzMyZWIzOGIxM2RhYTQxNmQxZmUyMyJ9fX0="
+    - "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDU3Mjg4NTQ0ZmViYWQzM2Y0NWMwMjNjYTgxY2Y4YjU0MjM5ZTc2ZGMzNjZjMGJlZDU2MjUxMWU3YWQ5YTI0MCJ9fX0="
+    - "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjU2MzU4YzA1NmJlYTdlYjYxNGJmMzE1ZGU3ZmFkZmUyMzhhNjdkZDU1NzY0MjU0YjAyNzdmYjYyMGU4ZjNiYiJ9fX0="
+    - "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2I1ZjNhOGE3YTUzMzhmZjhjMDFiZGQ0ZjViM2E1Y2FmNTQ5OWY0YzA0ZTg0ZTQyMzBkMDNmNDRjMzUyNWQ2ZCJ9fX0="
+    - "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWRlNGYxYWI5ZmYwMTU5ZDJiNzVkYjlhODAzMGRiZTZmZTY3YmJiNzE2M2E2OTcyODA1OGU1MjAzMGZlIn19fQ=="
+  items:
+    warp_icon:
+      name: "&f&l&n地标:&6&l %name%"
+      lore:
+        - "&b&l主人: &e%owner%"
+        - "&b&l参观数量: &e%visits%"
+        - "&b&l世界: &e%world%"
+        - "&b&lX: &e%X% &b&lY: &e%Y% &b&lZ: &e%Z%"
+        - "&7&l点击传送到传送点 %name%"
+    visitors_sort:
+      material: "REDSTONE_COMPARATOR"
+      name: "&b&l排序方式: &e参观数量"
+      lore:
+        - "&7点击切换"
+    name_sort:
+      material: "NAME_TAG"
+      name: "&b&l排序方式: &e名称"
+      lore:
+        - "&7点击切换"
+    created_sort:
+      material: "DIODE"
+      name: "&b&l排序方式: &e创建时间"
+      lore:
+        - "&7点击切换"
+    player_sort:
+      material: "DIAMOND_PICKAXE"
+      name: "&b&l排序方式: &e玩家"
+      lore:
+        - "&7点击切换"
+    prev_page:
+      material: "ARROW"
+      name: "&f&l上一页"
+      lore:
+        - "&7点击查看上一页"
+    next_page:
+      material: "ARROW"
+      name: "&f&l下一页"
+      lore:
+        - "&7点击查看下一页"
+
