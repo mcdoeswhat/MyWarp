@@ -62,7 +62,7 @@ class ItemUtil {
             String value = obj.getAsJsonArray("properties").get(0).getAsJsonObject().get("value").toString().replace("\"","");
             String decoded = new String(Base64.getDecoder().decode(value));
             obj = g.fromJson(decoded,JsonObject.class);
-            String skinURL = obj.get("textures").getAsJsonObject().getAsJsonObject("SKIN").get("url").toString().replace("\"","");
+            String skinURL = obj.getAsJsonObject("textures").getAsJsonObject("SKIN").get("url").toString().replace("\"","");
             byte[] skinByte = ("{\"textures\":{\"SKIN\":{\"url\":\"" + skinURL + "\"}}}").getBytes();
             return new String(Base64.getEncoder().encode(skinByte));
         } catch (Exception ignored){ }
