@@ -1,15 +1,11 @@
 package me.albert.mywarp.tasks;
 
 import me.albert.mywarp.MyWarp;
-import me.albert.mywarp.Warp;
 import me.albert.mywarp.WarpUtil;
-import me.albert.mywarp.commands.WarpList;
 import me.albert.mywarp.config.Messages;
 import me.albert.mywarp.hooks.Import;
-import me.albert.mywarp.inventory.ItemUtil;
 import me.albert.mywarp.inventory.MyWarpInv;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
@@ -20,7 +16,6 @@ public class MyWarpTask {
     private static Plugin mywarp = MyWarp.getInstance();
     private static int importWarps;
     private static int purgeWarps;
-    private static String prefix = Messages.getMsg("prefix");
     public static AtomicBoolean isPurging = new AtomicBoolean(false);
     public static AtomicBoolean isImporting = new AtomicBoolean(false);
 
@@ -28,7 +23,7 @@ public class MyWarpTask {
         Bukkit.getScheduler().cancelTask(purgeWarps);
         purgeWarps = Bukkit.getScheduler().runTaskAsynchronously(mywarp, () -> {
             isPurging.set(true);
-            String msg = prefix+Messages.getMsg("purge_warp").replace("[0]",
+            String msg = Messages.getMsg("prefix")+Messages.getMsg("purge_warp").replace("[0]",
                     String.valueOf(WarpUtil.purgeWarp()));
             sender.sendMessage(msg);
             isPurging.set(false);
@@ -42,7 +37,7 @@ public class MyWarpTask {
         importWarps = Bukkit.getScheduler().runTaskAsynchronously(mywarp, () -> {
                     if (isImporting.get()){ return; }
                     isImporting.set(true);
-                    String result = prefix+ Messages.getMsg("import").replace("[0]", Objects.requireNonNull(Import.getHookedPlugin())
+                    String result = Messages.getMsg("prefix")+ Messages.getMsg("import").replace("[0]", Objects.requireNonNull(Import.getHookedPlugin())
                     ).replace("[1]",String.valueOf(Import.startImport()));
                     sender.sendMessage(result);
                     isImporting.set(false);

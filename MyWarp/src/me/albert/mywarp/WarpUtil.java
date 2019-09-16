@@ -2,7 +2,6 @@ package me.albert.mywarp;
 
 import me.albert.mywarp.config.Messages;
 import me.albert.mywarp.inventory.MyWarpInv;
-import me.albert.mywarp.tasks.MyWarpTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;

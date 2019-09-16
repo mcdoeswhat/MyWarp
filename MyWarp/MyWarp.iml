@@ -11,17 +11,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://A:/ServerProjects/Life/Paper-1.12.2-b1613.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://A:/ServerProjects/Life/Paper-1.12.2-b1613.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://A:/ServerProjects/Life/plugins/Vault.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -53,6 +42,17 @@
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://A:/ServerProjects/1.13.2-Plugin-Test/PaperSpigot-1.13.1-b311.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://A:/ServerProjects/1.13.2-Plugin-Test/PaperSpigot-1.13.1-b311.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
   </component>

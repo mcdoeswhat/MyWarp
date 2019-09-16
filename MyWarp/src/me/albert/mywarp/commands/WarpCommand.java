@@ -22,6 +22,7 @@ public class WarpCommand implements CommandExecutor {
     private String prefix = Messages.getMsg("prefix");
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+        prefix = Messages.getMsg("prefix");
         if (!(sender instanceof Player)){
             sender.sendMessage(prefix+Messages.getMsg("player_only"));
             return true;
@@ -60,6 +61,7 @@ public class WarpCommand implements CommandExecutor {
         return true;
     }
     private void teleport(Player p,Warp warp){
+        prefix = Messages.getMsg("prefix");
         warp.updateLastvisit();
         warp.addVisitor(p.getUniqueId());
         p.teleport(warp.getLocation());

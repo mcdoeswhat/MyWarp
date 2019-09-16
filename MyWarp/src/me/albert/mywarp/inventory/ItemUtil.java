@@ -13,10 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class ItemUtil {
 
@@ -25,7 +22,7 @@ public class ItemUtil {
         if (getVersion() > 12) {
             skull = new ItemStack(Material.valueOf("PLAYER_HEAD"));
         } else {
-            skull = new ItemStack(Material.getMaterial("SKULL_ITEM"), 1, (short)SkullType.PLAYER.ordinal());
+            skull = new ItemStack(Objects.requireNonNull(Material.getMaterial("SKULL_ITEM")), 1, (short)SkullType.PLAYER.ordinal());
         }
 
         return skull;
@@ -52,7 +49,7 @@ public class ItemUtil {
         return icon;
     }
 
-    public static String getHeadValue(String name){
+    static String getHeadValue(String name){
         try {
             String result = getURLContent("https://api.mojang.com/users/profiles/minecraft/" + name);
             String uid = subString(result, "{\"id\":\"", "\",\"");
@@ -120,14 +117,14 @@ public class ItemUtil {
     }
 
    static ItemStack getItem(String key){
-        ItemStack is = new ItemStack(Material.GRASS);
+        ItemStack is = new ItemStack(Material.STONE);
         ItemMeta meta = is.getItemMeta();
         try {
             is.setType(Material.valueOf(Messages.getMsg("inventory.items."+key+".material")));
-            meta.setDisplayName(Messages.getMsg("inventory.items."+key+".name"));
-            meta.setLore(Messages.getList("inventory.items."+key+".lore"));
-            is.setItemMeta(meta);
         } catch (Exception ignored){}
+        meta.setDisplayName(Messages.getMsg("inventory.items."+key+".name"));
+        meta.setLore(Messages.getList("inventory.items."+key+".lore"));
+        is.setItemMeta(meta);
         return is;
     }
 

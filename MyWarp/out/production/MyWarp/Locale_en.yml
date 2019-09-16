@@ -61,7 +61,7 @@ warp_info:
   - "  &bLast active: &e%last_visit_date%"
   - "&6&m==========================="
 inventory:
-  title: "&9&l传送点列表 [0]/[1]"
+  title: "&9&lWarps [0]/[1]"
   #https://minecraft-heads.com/custom-heads
   randomheads:
     - "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzk1ZDM3OTkzZTU5NDA4MjY3ODQ3MmJmOWQ4NjgyMzQxM2MyNTBkNDMzMmEyYzdkOGM1MmRlNDk3NmIzNjIifX19"
