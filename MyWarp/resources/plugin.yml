@@ -1,7 +1,7 @@
 name: MyWarp
 author: Albert
 main: me.albert.mywarp.MyWarp
-version: 1.0.0
+version: 1.0.1
 api-version: 1.13
 commands:
   mywarp:

@@ -1,10 +1,13 @@
 package me.albert.mywarp.inventory;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import me.albert.mywarp.Warp;
 import me.albert.mywarp.config.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -15,7 +18,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class ItemUtil {
+class ItemUtil {
 
     private static ItemStack getSkull(){
         ItemStack skull;
@@ -48,15 +51,18 @@ public class ItemUtil {
         icon.setItemMeta(meta);
         return icon;
     }
-
     static String getHeadValue(String name){
         try {
             String result = getURLContent("https://api.mojang.com/users/profiles/minecraft/" + name);
-            String uid = subString(result, "{\"id\":\"", "\",\"");
+            Gson g = new Gson();
+            JsonObject obj = g.fromJson(result, JsonObject.class);
+            String uid = obj.get("id").toString().replace("\"","");
             String signature = getURLContent("https://sessionserver.mojang.com/session/minecraft/profile/" + uid);
-            String value = subString(signature, "\"value\":\"", "\"}]}");
+            obj = g.fromJson(signature, JsonObject.class);
+            String value = obj.getAsJsonArray("properties").get(0).getAsJsonObject().get("value").toString().replace("\"","");
             String decoded = new String(Base64.getDecoder().decode(value));
-            String skinURL = subString(decoded, "\"url\":\"", "\"}}}");
+            obj = g.fromJson(decoded,JsonObject.class);
+            String skinURL = obj.get("textures").getAsJsonObject().getAsJsonObject("SKIN").get("url").toString().replace("\"","");
             byte[] skinByte = ("{\"textures\":{\"SKIN\":{\"url\":\"" + skinURL + "\"}}}").getBytes();
             return new String(Base64.getEncoder().encode(skinByte));
         } catch (Exception ignored){ }
@@ -68,14 +74,6 @@ public class ItemUtil {
         Random random = new Random();
         int i = random.nextInt(heads.size());
         return heads.get(i);
-    }
-
-
-    private static String subString(String str, String strStart, String strEnd) {
-
-        int strStartIndex = str.indexOf(strStart);
-        int strEndIndex = str.indexOf(strEnd);
-        return str.substring(strStartIndex, strEndIndex).substring(strStart.length());
     }
 
     private static String getURLContent(String urlStr) {
