@@ -1,0 +1,13 @@
+lang: zh
+#warp distance limit
+warp-distance: 40
+max-warp-per-user: 10
+max-warp-name-length: 10
+min-warp-name-length: 1
+set-warp-cost: 1000
+teleport-delay: 3
+enable-tab-complete: true
+#when player opens the warp menu,keeps from the last time when player closed the menu
+save-opened-inv: true
+warp-name-regex: "a-zA-Z0-9_\u4e00-\u9fa5"
+enable-gui: true
