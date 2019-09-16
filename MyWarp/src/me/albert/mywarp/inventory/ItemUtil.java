@@ -51,6 +51,7 @@ class ItemUtil {
         icon.setItemMeta(meta);
         return icon;
     }
+
     static String getHeadValue(String name){
         try {
             String result = getURLContent("https://api.mojang.com/users/profiles/minecraft/" + name);
@@ -59,10 +60,10 @@ class ItemUtil {
             String uid = obj.get("id").toString().replace("\"","");
             String signature = getURLContent("https://sessionserver.mojang.com/session/minecraft/profile/" + uid);
             obj = g.fromJson(signature, JsonObject.class);
-            String value = obj.getAsJsonArray("properties").get(0).getAsJsonObject().get("value").toString().replace("\"","");
+            String value = obj.getAsJsonArray("properties").get(0).getAsJsonObject().get("value").getAsString();
             String decoded = new String(Base64.getDecoder().decode(value));
             obj = g.fromJson(decoded,JsonObject.class);
-            String skinURL = obj.getAsJsonObject("textures").getAsJsonObject("SKIN").get("url").toString().replace("\"","");
+            String skinURL = obj.getAsJsonObject("textures").getAsJsonObject("SKIN").get("url").getAsString();
             byte[] skinByte = ("{\"textures\":{\"SKIN\":{\"url\":\"" + skinURL + "\"}}}").getBytes();
             return new String(Base64.getEncoder().encode(skinByte));
         } catch (Exception ignored){ }
