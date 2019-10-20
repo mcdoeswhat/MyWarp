@@ -2,12 +2,10 @@ package me.albert.mywarp.hooks;
 
 import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.commands.WarpNotFoundException;
 import me.albert.mywarp.WarpUtil;
 import me.albert.mywarp.config.Messages;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import net.ess3.api.InvalidWorldException;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -83,7 +81,7 @@ public class Import {
                     String msg = Messages.getMsg("prefix")+Messages.getMsg("warp_imported")
                             .replace("[0]",w);
                     Bukkit.getLogger().info(msg);
-                } catch (WarpNotFoundException | InvalidWorldException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

@@ -7,7 +7,6 @@ import me.albert.mywarp.config.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -30,6 +29,7 @@ class ItemUtil {
 
         return skull;
     }
+
 
 
     static ItemStack getIcon(Warp warp){
@@ -69,6 +69,7 @@ class ItemUtil {
         } catch (Exception ignored){ }
         return null;
     }
+
 
     private static String getRandom(){
         List<String> heads = Messages.getList("inventory.randomheads");
@@ -144,6 +145,6 @@ class ItemUtil {
     private static int getVersion() {
         String name = Bukkit.getServer().getClass().getPackage().getName();
         name = (name.substring(name.lastIndexOf('.') + 1) + ".").substring(3);
-        return Integer.valueOf(name.substring(0, name.length() - 4));
+        return Integer.parseInt(name.substring(0, name.length() - 4));
     }
 }
