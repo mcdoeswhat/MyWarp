@@ -5,9 +5,13 @@ import me.albert.mywarp.inventory.MyWarpInv;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -102,6 +106,12 @@ public class WarpUtil {
             }
         }
         return null;
+    }
+
+    public static boolean canBuild(Player player){
+        BlockBreakEvent e = new BlockBreakEvent(player.getLocation().getBlock(), player);
+        Bukkit.getServer().getPluginManager().callEvent(e);
+        return !e.isCancelled();
     }
 
     public static int purgeWarp(){
