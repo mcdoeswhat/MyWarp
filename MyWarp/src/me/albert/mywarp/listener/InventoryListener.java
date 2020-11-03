@@ -3,6 +3,7 @@ package me.albert.mywarp.listener;
 import me.albert.mywarp.MyWarp;
 import me.albert.mywarp.Warp;
 import me.albert.mywarp.WarpUtil;
+import me.albert.mywarp.inventory.MyHolder;
 import me.albert.mywarp.inventory.MyWarpInv;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,7 +24,10 @@ public class InventoryListener implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e){
         Inventory inv = e.getInventory();
-        if (InvType.getType(e.getInventory()) != null){
+        if (e.getInventory().getHolder() instanceof MyHolder){
+            e.setCancelled(true);
+        }
+        if (InvType.getType(e.getClickedInventory()) != null){
             e.setCancelled(true);
             if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR
             || !e.getCurrentItem().getItemMeta().hasDisplayName()){

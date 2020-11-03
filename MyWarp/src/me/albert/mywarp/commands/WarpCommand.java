@@ -52,6 +52,9 @@ public class WarpCommand implements CommandExecutor {
         String msg = prefix+Messages.getMsg("teleport_in").replace("[0]",String.valueOf(delay));
         p.sendMessage(msg);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(MyWarp.getInstance(), () -> {
+            if (!p.getLocation().getWorld().equals(previousLoc.getWorld())){
+                return;
+            }
             if (p.getLocation().distanceSquared(previousLoc) > 2){
                 p.sendMessage(prefix+Messages.getMsg("player_moved"));
                 return;

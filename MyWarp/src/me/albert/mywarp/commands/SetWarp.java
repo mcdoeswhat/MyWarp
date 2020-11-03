@@ -38,10 +38,6 @@ public class SetWarp implements CommandExecutor {
             return true;
 
         }
-        if (instance.getConfig().getBoolean("only_canbuild") && !WarpUtil.canBuild(p)){
-            sender.sendMessage(prefix+Messages.getMsg("cant_build"));
-            return true;
-        }
         if (MyWarp.getEconomy().getBalance(p) < cost) {
             String msg = prefix+Messages.getMsg("ins_balance").replace("[0]",String.valueOf(cost));
             p.sendMessage(msg);
@@ -63,6 +59,10 @@ public class SetWarp implements CommandExecutor {
             String msg = prefix+Messages.getMsg("has_warp_nearby").replace("[0]"
             , Objects.requireNonNull(WarpUtil.getNearbyWarp(p.getLocation())).getName());
             sender.sendMessage(msg);
+            return true;
+        }
+        if (instance.getConfig().getBoolean("only_canbuild") && !WarpUtil.canBuild(p)){
+            sender.sendMessage(prefix+Messages.getMsg("cant_build"));
             return true;
         }
         MyWarp.getEconomy().withdrawPlayer(p, cost);

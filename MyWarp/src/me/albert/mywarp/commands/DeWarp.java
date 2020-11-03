@@ -4,6 +4,9 @@ import me.albert.mywarp.IWarp;
 import me.albert.mywarp.Warp;
 import me.albert.mywarp.WarpUtil;
 import me.albert.mywarp.config.Messages;
+import me.ryanhamshire.GriefPrevention.Claim;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,6 +31,15 @@ public class DeWarp implements CommandExecutor {
         }
         Warp warp = IWarp.getWarp(args[0]);
         Player p = (Player)sender;
+        if (Bukkit.getPluginManager().getPlugin("GriefPrevention") != null){
+        if (GriefPrevention.instance.dataStore.getClaimAt(warp.getLocation(),true,null) != null){
+            Claim claim = GriefPrevention.instance.dataStore.getClaimAt(warp.getLocation(),true,null);
+            if (claim.ownerID != null && claim.ownerID.equals(p.getUniqueId())){
+                warp.delete();
+                p.sendMessage(prefix+Messages.getMsg("delete_warp"));
+                return true;
+            }
+        }}
         if (!warp.getOwner().getUniqueId().equals(p.getUniqueId()) && !p.hasPermission("mywarp.delete.other")){
             p.sendMessage(prefix+Messages.getMsg("not_owner"));
             return true;

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import me.albert.mywarp.Warp;
 import me.albert.mywarp.config.Messages;
+import me.albert.skullapi.SkullAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -37,6 +38,10 @@ class ItemUtil {
         if (warp.getTexture() != null){
             icon = getHead(warp.getTexture());
         }
+        if (Bukkit.getPluginManager().getPlugin("SkullAPI") != null){
+        if (SkullAPI.getSkull(warp.getOwner().getName()) != null){
+            icon = SkullAPI.getSkull(warp.getOwner().getName());
+        }}
         ItemMeta meta = icon.getItemMeta();
         meta.setDisplayName(Messages.getMsg("inventory.items.warp_icon.name").replace("%name%",warp.getName()));
         List<String> lore = Messages.getList("inventory.items.warp_icon.lore");

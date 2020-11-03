@@ -13,9 +13,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class MyWarp extends JavaPlugin {
     private static MyWarp instance;
     private static Economy econ;
+
+    public static AtomicInteger rateLimit = new AtomicInteger(0);
     @Override
     public void onEnable(){
         instance = this;
@@ -33,6 +37,9 @@ public class MyWarp extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new InventoryListener(),this);
         Import.loadHooks();
         Bukkit.getLogger().info("[MyWarp] Loaded");
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+            rateLimit.set(0);
+        }, 20 * 60 * 10, 20 * 60 * 10);
     }
 
 

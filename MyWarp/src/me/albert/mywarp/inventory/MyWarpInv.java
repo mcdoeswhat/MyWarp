@@ -75,6 +75,7 @@ public class MyWarpInv {
                 loadNameSort(i);
                 loadPlayersSort(i);
             }
+
             for (Player p : playersToOpen){
                 if (WarpUtil.warps.size() == 0){
                     break;
@@ -82,7 +83,12 @@ public class MyWarpInv {
                 p.openInventory(MyWarpInv.visitorsSort.get(0));
             }
             isLoading.set(false);
+
             for (OfflinePlayer p : WarpList.getWarpUsers()){
+                if (MyWarp.rateLimit.get() > 100){
+                    break;
+                }
+                MyWarp.rateLimit.set(MyWarp.rateLimit.get()+1);
                 String texture = ItemUtil.getHeadValue(p.getName());
                 for (Warp warp : WarpList.getWarps(p)){
                     if (texture != null) {
@@ -93,7 +99,7 @@ public class MyWarpInv {
     private static Inventory warpInv(int page){
         String title = Messages.getMsg("inventory.title").replace("[0]",
                 String.valueOf(page+1)).replace("[1]",String.valueOf(invSize));
-        return Bukkit.createInventory(null,54,title);
+        return Bukkit.createInventory(new MyHolder(),54,title);
     }
 
     private static void loadNameSort(int page){
