@@ -56,7 +56,7 @@ public class MyWarpInv {
                 Inventory inv = p.getOpenInventory().getTopInventory();
                 if (InvType.getType(inv) != null){
                     playersToOpen.add(p);
-                    p.closeInventory();
+                    Bukkit.getScheduler().runTask(MyWarp.getInstance(), p::closeInventory);
                 }
             }
             visitorsSort.clear();
@@ -80,7 +80,7 @@ public class MyWarpInv {
                 if (WarpUtil.warps.size() == 0){
                     break;
                 }
-                p.openInventory(MyWarpInv.visitorsSort.get(0));
+                Bukkit.getScheduler().runTask(MyWarp.getInstance(), () -> p.openInventory(MyWarpInv.visitorsSort.get(0)));
             }
             isLoading.set(false);
 
