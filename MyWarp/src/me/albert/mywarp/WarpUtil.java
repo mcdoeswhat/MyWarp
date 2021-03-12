@@ -33,8 +33,13 @@ public class WarpUtil {
         }
         for (File file : Objects.requireNonNull(folder.listFiles())) {
             if (!file.isDirectory() || file.getName().contains(".yml")) {
-                warps.add(IWarp.getWarp(file.getName().replace(".yml", "")));
-                warpcount++;
+                try{
+                    warps.add(IWarp.getWarp(file.getName().replace(".yml", "")));
+                    warpcount++;
+                } catch (Exception e){
+                    e.printStackTrace();
+                    MyWarp.getInstance().getLogger().warning("Error loading warp: "+file.getName());
+                }
             }
         }
         Long end = System.currentTimeMillis()-start;

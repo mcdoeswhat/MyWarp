@@ -33,115 +33,126 @@ public class MyWarpInv {
     public static ArrayList<Warp> visitorsWarps = new ArrayList<>();
     public static ArrayList<Warp> createdWarps = new ArrayList<>();
     public static ArrayList<Warp> playerWarps = new ArrayList<>();
-    public static HashMap<UUID,Inventory> tempInv = new HashMap<>();
+    public static HashMap<UUID, Inventory> tempInv = new HashMap<>();
     static int invSize = mm(WarpUtil.warps.size());
     private static ArrayList<Player> playersToOpen = new ArrayList<>();
-    private static int mm(int a){
-        return (a% 45 ==0)?a/45:(a/ 45 +1);
+
+    private static int mm(int a) {
+        return (a % 45 == 0) ? a / 45 : (a / 45 + 1);
     }
 
-    public static boolean isLoadingGUI(){
+    public static boolean isLoadingGUI() {
         return MyWarpTask.isImporting.get() || MyWarpTask.isPurging.get() || isLoading.get();
     }
-    public static void loadInventory(){
-        if (!Messages.getBoolean("enable-gui") || isLoadingGUI()){
+
+    public static void loadInventory() {
+        if (!MyWarp.getInstance().getConfig().getBoolean("enable-gui") || isLoadingGUI()) {
             return;
         }
         Bukkit.getScheduler().cancelTask(loadInvTask);
         loadInvTask = Bukkit.getScheduler().runTaskAsynchronously(MyWarp.getInstance(), () -> {
-            isLoading.set(true);
-            invSize = mm(WarpUtil.warps.size());
-            playersToOpen.clear();
-            for (Player p : Bukkit.getOnlinePlayers()){
-                Inventory inv = p.getOpenInventory().getTopInventory();
-                if (InvType.getType(inv) != null){
-                    playersToOpen.add(p);
-                    Bukkit.getScheduler().runTask(MyWarp.getInstance(), p::closeInventory);
+            try {
+                isLoading.set(true);
+                invSize = mm(WarpUtil.warps.size());
+                playersToOpen.clear();
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    Inventory inv = p.getOpenInventory().getTopInventory();
+                    if (InvType.getType(inv) != null) {
+                        playersToOpen.add(p);
+                        Bukkit.getScheduler().runTask(MyWarp.getInstance(), p::closeInventory);
+                    }
                 }
-            }
-            visitorsSort.clear();
-            visitorsWarps.clear();
-            nameSort.clear();
-            playerSort.clear();
-            tempInv.clear();
-            createdSort.clear();
-            createdWarps.clear();
-            playerWarps.clear();
-            createdTemp = new ArrayList<>(WarpUtil.warps);
-            visitorsTemp = new ArrayList<>(WarpUtil.warps);
-            for (int i =0;i<invSize;i++){
-                loadVisitorsSort(i);
-                loadCreatedSort(i);
-                loadNameSort(i);
-                loadPlayersSort(i);
-            }
+                visitorsSort.clear();
+                visitorsWarps.clear();
+                nameSort.clear();
+                playerSort.clear();
+                tempInv.clear();
+                createdSort.clear();
+                createdWarps.clear();
+                playerWarps.clear();
+                createdTemp = new ArrayList<>(WarpUtil.warps);
+                visitorsTemp = new ArrayList<>(WarpUtil.warps);
+                for (int i = 0; i < invSize; i++) {
+                    loadVisitorsSort(i);
+                    loadCreatedSort(i);
+                    loadNameSort(i);
+                    loadPlayersSort(i);
+                }
 
-            for (Player p : playersToOpen){
-                if (WarpUtil.warps.size() == 0){
-                    break;
+                for (Player p : playersToOpen) {
+                    if (WarpUtil.warps.size() == 0) {
+                        break;
+                    }
+                    Bukkit.getScheduler().runTask(MyWarp.getInstance(), () -> p.openInventory(MyWarpInv.visitorsSort.get(0)));
                 }
-                Bukkit.getScheduler().runTask(MyWarp.getInstance(), () -> p.openInventory(MyWarpInv.visitorsSort.get(0)));
+            } catch (Exception e) {
+                e.printStackTrace();
+                isLoading.set(false);
+                loadInventory();
+                return;
             }
             isLoading.set(false);
-
-            for (OfflinePlayer p : WarpList.getWarpUsers()){
-                if (MyWarp.rateLimit.get() > 100){
+            for (OfflinePlayer p : WarpList.getWarpUsers()) {
+                if (MyWarp.rateLimit.get() > 100) {
                     break;
                 }
-                MyWarp.rateLimit.set(MyWarp.rateLimit.get()+1);
+                MyWarp.rateLimit.set(MyWarp.rateLimit.get() + 1);
                 String texture = ItemUtil.getHeadValue(p.getName());
-                for (Warp warp : WarpList.getWarps(p)){
+                for (Warp warp : WarpList.getWarps(p)) {
                     if (texture != null) {
                         warp.setTexture(texture);
-                    }}}
+                    }
+                }
+            }
         }).getTaskId();
     }
-    private static Inventory warpInv(int page){
+
+    private static Inventory warpInv(int page) {
         String title = Messages.getMsg("inventory.title").replace("[0]",
-                String.valueOf(page+1)).replace("[1]",String.valueOf(invSize));
-        return Bukkit.createInventory(new MyHolder(),54,title);
+                String.valueOf(page + 1)).replace("[1]", String.valueOf(invSize));
+        return Bukkit.createInventory(new MyHolder(), 54, title);
     }
 
-    private static void loadNameSort(int page){
+    private static void loadNameSort(int page) {
         Inventory warpInv = warpInv(page);
-        for (int i = page*45;i<page*45+45 && i<WarpUtil.warps.size();i++){
+        for (int i = page * 45; i < page * 45 + 45 && i < WarpUtil.warps.size(); i++) {
             Warp warp = WarpUtil.warps.get(i);
             LoadWarpIcon(warpInv, i, warp);
         }
-        nameSort.add(getSortInv(page, warpInv,"name_sort"));
+        nameSort.add(getSortInv(page, warpInv, "name_sort"));
     }
 
-    private static void loadPlayersSort(int page){
+    private static void loadPlayersSort(int page) {
         loadPlayerWarps();
         Inventory warpInv = warpInv(page);
-        for (int i = page*45;i<page*45+45 && i<WarpUtil.warps.size();i++){
+        for (int i = page * 45; i < page * 45 + 45 && i < WarpUtil.warps.size(); i++) {
             Warp warp = playerWarps.get(i);
             LoadWarpIcon(warpInv, i, warp);
         }
-        playerSort.add(getSortInv(page, warpInv,"player_sort"));
+        playerSort.add(getSortInv(page, warpInv, "player_sort"));
     }
 
-    private static void loadVisitorsSort(int page){
+    private static void loadVisitorsSort(int page) {
         Inventory warpInv = warpInv(page);
-        for (int i = page*45;i<page*45+45 && i<WarpUtil.warps.size();i++){
+        for (int i = page * 45; i < page * 45 + 45 && i < WarpUtil.warps.size(); i++) {
             Warp warp = getMostVisited();
             LoadWarpIcon(warpInv, i, warp);
             visitorsWarps.add(warp);
         }
-        visitorsSort.add(getSortInv(page, warpInv,"visitors_sort"));
+        visitorsSort.add(getSortInv(page, warpInv, "visitors_sort"));
     }
 
     private static Inventory getSortInv(int page, Inventory warpInv, String key) {
         ItemStack sortBy = ItemUtil.getItem(key);
-        warpInv.setItem(warpInv.getSize()-9,ItemUtil.getPrev(page));
-        warpInv.setItem(warpInv.getSize()-1,getNext(page));
-        warpInv.setItem(warpInv.getSize()-5,sortBy);
+        warpInv.setItem(warpInv.getSize() - 9, ItemUtil.getPrev(page));
+        warpInv.setItem(warpInv.getSize() - 1, getNext(page));
+        warpInv.setItem(warpInv.getSize() - 5, sortBy);
         return warpInv;
     }
 
-    private static void loadCreatedSort(int page){
+    private static void loadCreatedSort(int page) {
         Inventory warpInv = warpInv(page);
-        for (int i = page*45;i<page*45+45 && i<WarpUtil.warps.size();i++){
+        for (int i = page * 45; i < page * 45 + 45 && i < WarpUtil.warps.size(); i++) {
             Warp warp = getMostCreated();
             LoadWarpIcon(warpInv, i, warp);
             createdWarps.add(warp);
@@ -151,29 +162,30 @@ public class MyWarpInv {
 
     private static void LoadWarpIcon(Inventory warpInv, int i, Warp warp) {
         ItemStack warpItem = getIcon(warp);
-        warpInv.setItem(i%45,warpItem);
+        warpInv.setItem(i % 45, warpItem);
     }
 
-    private static Warp getMostCreated(){
+    private static Warp getMostCreated() {
         Warp warp = null;
-        for (Warp w : createdTemp){
-            if (warp == null || w.getTimecreated() > warp.getTimecreated()){
+        for (Warp w : createdTemp) {
+            if (warp == null || w.getTimecreated() > warp.getTimecreated()) {
                 warp = w;
             }
         }
         createdTemp.remove(warp);
         return warp;
     }
-    private static void loadPlayerWarps(){
-        for (OfflinePlayer p : WarpList.getWarpUsers()){
+
+    private static void loadPlayerWarps() {
+        for (OfflinePlayer p : WarpList.getWarpUsers()) {
             playerWarps.addAll(WarpList.getWarps(p));
         }
     }
 
-    private static Warp getMostVisited(){
+    private static Warp getMostVisited() {
         Warp warp = null;
-        for (Warp w : visitorsTemp){
-            if (warp == null || w.getVisitors().size() > warp.getVisitors().size()){
+        for (Warp w : visitorsTemp) {
+            if (warp == null || w.getVisitors().size() > warp.getVisitors().size()) {
                 warp = w;
             }
         }

@@ -37,9 +37,9 @@ public class Messages {
         }
         return result;
     }
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+
     public static boolean getBoolean(String key){
-        return !config.getBoolean(key);
+        return config.getBoolean(key);
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")

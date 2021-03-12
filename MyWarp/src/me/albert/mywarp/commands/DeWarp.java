@@ -1,6 +1,7 @@
 package me.albert.mywarp.commands;
 
 import me.albert.mywarp.IWarp;
+import me.albert.mywarp.MyWarp;
 import me.albert.mywarp.Warp;
 import me.albert.mywarp.WarpUtil;
 import me.albert.mywarp.config.Messages;
@@ -15,37 +16,40 @@ import org.bukkit.entity.Player;
 public class DeWarp implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        String prefix = Messages.getMsg("prefix");
-        if (!(sender instanceof Player)){
-            sender.sendMessage(prefix + Messages.getMsg("player_only"));
-            return true;
-        }
-        if (args.length == 0){
-            sender.sendMessage(prefix+Messages.getMsg("usage_dewarp"));
-            return true;
-        }
-        if (!WarpUtil.hasWarp(args[0])){
-            String nowarp = prefix +Messages.getMsg("no_warp").replace("[0]",args[0]);
-            sender.sendMessage(nowarp);
-            return true;
-        }
-        Warp warp = IWarp.getWarp(args[0]);
-        Player p = (Player)sender;
-        if (Bukkit.getPluginManager().getPlugin("GriefPrevention") != null){
-        if (GriefPrevention.instance.dataStore.getClaimAt(warp.getLocation(),true,null) != null){
-            Claim claim = GriefPrevention.instance.dataStore.getClaimAt(warp.getLocation(),true,null);
-            if (claim.ownerID != null && claim.ownerID.equals(p.getUniqueId())){
-                warp.delete();
-                p.sendMessage(prefix+Messages.getMsg("delete_warp"));
-                return true;
+        Bukkit.getScheduler().runTaskAsynchronously(MyWarp.getInstance(), () -> {
+            String prefix = Messages.getMsg("prefix");
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(prefix + Messages.getMsg("player_only"));
+                return;
             }
-        }}
-        if (!warp.getOwner().getUniqueId().equals(p.getUniqueId()) && !p.hasPermission("mywarp.delete.other")){
-            p.sendMessage(prefix+Messages.getMsg("not_owner"));
-            return true;
-        }
-        warp.delete();
-        p.sendMessage(prefix+Messages.getMsg("delete_warp"));
+            if (args.length == 0) {
+                sender.sendMessage(prefix + Messages.getMsg("usage_dewarp"));
+                return;
+            }
+            if (!WarpUtil.hasWarp(args[0])) {
+                String nowarp = prefix + Messages.getMsg("no_warp").replace("[0]", args[0]);
+                sender.sendMessage(nowarp);
+                return;
+            }
+            Warp warp = IWarp.getWarp(args[0]);
+            Player p = (Player) sender;
+            if (Bukkit.getPluginManager().getPlugin("GriefPrevention") != null) {
+                if (GriefPrevention.instance.dataStore.getClaimAt(warp.getLocation(), true, null) != null) {
+                    Claim claim = GriefPrevention.instance.dataStore.getClaimAt(warp.getLocation(), true, null);
+                    if (claim.ownerID != null && claim.ownerID.equals(p.getUniqueId())) {
+                        warp.delete();
+                        p.sendMessage(prefix + Messages.getMsg("delete_warp"));
+                        return;
+                    }
+                }
+            }
+            if (!warp.getOwner().getUniqueId().equals(p.getUniqueId()) && !p.hasPermission("mywarp.delete.other")) {
+                p.sendMessage(prefix + Messages.getMsg("not_owner"));
+                return;
+            }
+            warp.delete();
+            p.sendMessage(prefix + Messages.getMsg("delete_warp"));
+        });
         return true;
     }
 }
