@@ -64,16 +64,20 @@ public class SetWarp implements CommandExecutor {
                 sender.sendMessage(msg);
                 return;
             }
-            if (instance.getConfig().getBoolean("only_canbuild") && !WarpUtil.canBuild(p)) {
-                sender.sendMessage(prefix + Messages.getMsg("cant_build"));
-                return;
-            }
-            MyWarp.getEconomy().withdrawPlayer(p, cost);
-            WarpUtil.createWarp(p.getLocation(), p, args[0]);
-            String msg = prefix + Messages.getMsg("create_warp").replace("[0]", args[0]);
-            String msg2 = prefix + Messages.getMsg("balance_take").replace("[0]", String.valueOf(cost));
-            sender.sendMessage(msg);
-            sender.sendMessage(msg2);
+            Bukkit.getScheduler().runTask(MyWarp.getInstance(), () -> {
+                if (instance.getConfig().getBoolean("only_canbuild") && !WarpUtil.canBuild(p)) {
+                    sender.sendMessage(prefix + Messages.getMsg("cant_build"));
+                    return;
+                }
+                Bukkit.getScheduler().runTaskAsynchronously(MyWarp.getInstance(), () -> {
+                    MyWarp.getEconomy().withdrawPlayer(p, cost);
+                    WarpUtil.createWarp(p.getLocation(), p, args[0]);
+                    String msg = prefix + Messages.getMsg("create_warp").replace("[0]", args[0]);
+                    String msg2 = prefix + Messages.getMsg("balance_take").replace("[0]", String.valueOf(cost));
+                    sender.sendMessage(msg);
+                    sender.sendMessage(msg2);
+                });
+            });
         });
         return true;
     }

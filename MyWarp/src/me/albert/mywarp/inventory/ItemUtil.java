@@ -35,6 +35,9 @@ class ItemUtil {
 
     static ItemStack getIcon(Warp warp) {
         ItemStack icon = getHead(getRandom());
+        if (warp == null){
+            return icon;
+        }
         try {
             if (warp.getTexture() != null) {
                 icon = getHead(warp.getTexture());

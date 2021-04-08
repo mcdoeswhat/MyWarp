@@ -13,15 +13,15 @@ import java.util.List;
 import java.util.UUID;
 
 public class IWarp implements Warp{
-    private String name;
-    private Location loc;
-    private Long lastvisit;
-    private Long timecreated;
-    private List<UUID> visitors = new ArrayList<>();
-    private UUID owner;
-    private File warpFile;
-    private FileConfiguration warpConfig;
-    private String texture;
+    private final String name;
+    private final Location loc;
+    private final Long lastvisit;
+    private final Long timecreated;
+    private final List<UUID> visitors = new ArrayList<>();
+    private final UUID owner;
+    private final File warpFile;
+    private final FileConfiguration warpConfig;
+    private final String texture;
 
     public List<UUID> getVisitors() {return visitors;}
 

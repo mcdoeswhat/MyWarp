@@ -3,6 +3,7 @@ package me.albert.mywarp.tabcompleter;
 import me.albert.mywarp.MyWarp;
 import me.albert.mywarp.Warp;
 import me.albert.mywarp.WarpUtil;
+import me.albert.mywarp.inventory.MyWarpInv;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;

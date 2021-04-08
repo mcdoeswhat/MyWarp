@@ -118,7 +118,7 @@ public class MyWarpCommand implements CommandExecutor {
                                 return;
                             }
                             if (!WarpUtil.hasWarp(args[1])) {
-                                String msg = prefix + Messages.getMsg("empty_warp").replace("[0]", args[1]);
+                                String msg = prefix + Messages.getMsg("no_warp").replace("[0]", args[1]);
                                 sender.sendMessage(msg);
                                 return;
                             }
