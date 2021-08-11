@@ -14,7 +14,7 @@ import java.util.List;
 public class WarpTabCompleter implements TabCompleter {
 
     public static void main(String[] args) {
-        System.out.println("sk".startsWith("sk"));
+        System.out.println(true);
     }
 
     @Override

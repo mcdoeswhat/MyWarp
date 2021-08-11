@@ -36,7 +36,7 @@ public class DeWarp implements CommandExecutor {
             if (Bukkit.getPluginManager().getPlugin("GriefPrevention") != null) {
                 if (GriefPrevention.instance.dataStore.getClaimAt(warp.getLocation(), true, null) != null) {
                     Claim claim = GriefPrevention.instance.dataStore.getClaimAt(warp.getLocation(), true, null);
-                    if (claim.ownerID != null && claim.ownerID.equals(p.getUniqueId())) {
+                    if (p.getName().equalsIgnoreCase(claim.getOwnerName())) {
                         warp.delete();
                         p.sendMessage(prefix + Messages.getMsg("delete_warp"));
                         return;
